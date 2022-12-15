@@ -1003,7 +1003,7 @@ data_input = """5-96,6-99
 
 processed_input = data_input.split("\n")
 
-amrabat = [ [elf.split("-") for elf in elf_pair.split(",") ]  for elf_pair in processed_input]  #Nested list comprehension came like Ambrabat vs Pedri
+amrabat = [ [ [int(id) for id in elf.split("-") ] for elf in elf_pair.split(",") ]  for elf_pair in processed_input]  #Nested list comprehension came like Ambrabat vs Pedri
 
 #print(amrabat)
 
@@ -1011,14 +1011,16 @@ amrabat = [ [elf.split("-") for elf in elf_pair.split(",") ]  for elf_pair in pr
 
 def contained_within_range(amrabat):
     """ In how many assignment pairs does one range fully contain the other? """
-    
+   
+    counter = 0 # count pairs within range 
     for element in amrabat:
-        if element[0][0] <= element[1][0] and element[0][1] >= element[1][1]:
-            print(f" element is contained in outer range")
+        if element[0][0] <= element[1][0] and element[0][1] >= element[1][1]: 
+            counter += 1
+
         elif element[1][0] <= element[0][0] and element[1][1] >= element[0][1]:
-            print("Element contained in inner range")
+            counter += 1
         
-    return element
+    return counter
 
 
 print(contained_within_range(amrabat))
