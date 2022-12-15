@@ -1009,21 +1009,24 @@ amrabat = [ [ [int(id) for id in elf.split("-") ] for elf in elf_pair.split(",")
 
 
 
-def contained_within_range(amrabat):
+def overlaps(amrabat):
     """ In how many assignment pairs does one range fully contain the other? """
    
     counter = 0 # count pairs within range 
     for element in amrabat:
-        if element[0][0] <= element[1][0] and element[0][1] >= element[1][1]: 
+        if element[0][0] <= element[1][1] and element[0][1] >= element[1][0]: 
             counter += 1
 
-        elif element[1][0] <= element[0][0] and element[1][1] >= element[0][1]:
+        elif element[1][1] <= element[0][0] and element[1][0] >= element[0][1]:
             counter += 1
         
     return counter
 
 
-print(contained_within_range(amrabat))
+print(overlaps(amrabat))
+
+
+
 
 
     
