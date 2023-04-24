@@ -1,1 +1,46 @@
-
+function processDrawing(drawing, stackQuantity) {
+    const drawingRows = drawing.split('\n').reverse();
+    let stacks = {};
+    for (let stack = 1; stack <= stackQuantity; stack++) {
+        let boxTower = [];
+        drawingRows.find(row => {
+            if (row[4*stack - 3] != ' ') {
+                boxTower.push(row[4*stack - 3]);
+                return false;
+            } else {
+                return true;
+            }
+        });
+        stacks[String(stack)] = boxTower;
+    }
+    return(stacks);
+}
+ 
+function processInstructions(instructions) {
+    return instructions.split("\n").map(instruction => {
+        const listInstruction = instruction.split(" ");
+        return [listInstruction[1],listInstruction[3],listInstruction[5]];
+    })
+}
+ 
+function moveBoxes1(boxes,instructions){
+    instructions.forEach(instruction => {
+        const numberOfBoxesToMove = parseInt(instruction[0]);
+        const boxesToMove = boxes[instruction[1]].slice(-1*numberOfBoxesToMove).reverse();
+        boxes[instruction[1]] = boxes[instruction[1]].slice(0,-1*numberOfBoxesToMove);
+        boxes[instruction[2]] = boxes[instruction[2]].concat(boxesToMove);
+    });
+    const message = Object.keys(boxes).map(key => boxes[key].slice(-1)).join('');
+    return message;
+}
+ 
+function moveBoxes2(boxes,instructions){
+    instructions.forEach(instruction => {
+        const numberOfBoxesToMove = parseInt(instruction[0]);
+        const boxesToMove = boxes[instruction[1]].slice(-1*numberOfBoxesToMove);
+        boxes[instruction[1]] = boxes[instruction[1]].slice(0,-1*numberOfBoxesToMove);
+        boxes[instruction[2]] = boxes[instruction[2]].concat(boxesToMove);
+    });
+    const message = Object.keys(boxes).map(key => boxes[key].slice(-1)).join('');
+    return message;
+}
